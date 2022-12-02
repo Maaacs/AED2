@@ -12,7 +12,7 @@ struct agenda{
     char descricao[30];
 };
 
-//typedef struct agenda TAgenda; //tipo livro
+//typedef struct agenda TAgenda; //tipo agenda
 
 TAgenda* criar_agenda(char *titulo, char *diaMesAno, char *hora, char *local, char *descricao){
     TAgenda *l = malloc(sizeof(TAgenda));
@@ -26,9 +26,12 @@ TAgenda* criar_agenda(char *titulo, char *diaMesAno, char *hora, char *local, ch
     return l;
 }
 
-void imprimir_agenda(TAgenda* l){
-     printf("%s %s %s %s %s\n", l->titulo, l->diaMesAno, l->hora, l->local, l->descricao);
-}
+// void imprimir_agenda(TAgenda* l){
+//      printf("%s %s %s %s %s\n", l->titulo, l->diaMesAno, l->hora, l->local, l->descricao);
+// }
 
+agendar_evento();
+proximo_evento();
+remover_evento();
 
 
