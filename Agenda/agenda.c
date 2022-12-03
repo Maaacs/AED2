@@ -19,7 +19,7 @@ struct agendaInfo{
 };
 
 struct elementoLSE{
-    TipoAgendaInfo* cargaUtil;
+    TipoAgendaInfo* cargaUtil; //agendaInfo
     int deadline;
 };
 
