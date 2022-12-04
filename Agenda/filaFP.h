@@ -1,9 +1,9 @@
-typedef struct fila TFila;
+typedef int (*TCompararFP)(void*, void*);
+typedef struct filaPrioridade TFilaPrioridade;
 
-TFila* criar_FP(int tamanho);
-void enfileirar_FP (TFila *f, void* elem);
-void* desenfileirar_FP (TFila* f);
-destroy_FP();
 
-//int tamanho_fila (TFila* f);
+TFilaPrioridade* criar_FP(int tamanho, TCompararFP comparar);
+void enfileirar_FP (TFilaPrioridade *f, void* elem);
+//void* desenfileirar_FP (TFilaPrioridade* f);
+//destroy_FP();
 
