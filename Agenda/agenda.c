@@ -20,6 +20,7 @@ struct agendaInfo{
 
 struct elementoLSE{
     TipoAgendaInfo* cargaUtil; //agendaInfo
+    int prioridade;
     int deadline;
 };
 
@@ -27,29 +28,33 @@ struct elementoLSE{
 TipoAgendaLSE* criar_agenda(){
 
     TipoAgendaLSE *l = malloc(sizeof(TipoAgendaLSE)); // aloca na memória o elementoLSE que contem os campos: cargaUtil e deadline
+    l->prioridade = 1;
     l->deadline = 0;
     return l;
 }
 
+TipoAgendaLSE* agendar_evento(char *titulo, char *data, int tempolimite, char *local, char *descricao, int Prioridade){
+//TipoAgendaLSE* agendar_evento(TipoAgendaInfo* carga, int Prioridade){ //insere um novo evento na agenda considerando os atributos que irão posicionar o evento na agenda
 
-TipoAgendaLSE* agendar_evento(char *titulo, char *data, int tempolimite, char *local, char *descricao){ //insere um novo evento na agenda considerando os atributos que irão posicionar o evento na agenda
-
-    TipoAgendaLSE *l;
-
+    TipoAgendaLSE *l;    
     strcpy(l->cargaUtil->titulo, titulo); //tem que passar cada char do vetor de char, por isso fazer uma copia com strcpy
     strcpy(l->cargaUtil->data, data);
     l->cargaUtil->tempoLimite = tempolimite;
     strcpy(l->cargaUtil->local, local);
     strcpy(l->cargaUtil->descricao, descricao);
+    //l->cargaUtil = carga;
+    l->prioridade = Prioridade; //podemos tratar a prioridade como um elemento da LSE ou uma informaçao interna da AgendaInfo
 
     if (l->cargaUtil->tempoLimite < l->deadline){
-        l->deadline = tempolimite; // grava o menor tempo sempre
+        l->deadline = l->cargaUtil->tempoLimite; // grava o menor tempo sempre
     }
 
-}
-proximo_evento(); // retorna o evento que está na eminência de ocorrer
+    return l;
 
-remover_evento(); // remove e retorna o evento que está na eminência de ocorrer.
+}
+//proximo_evento(); // retorna o evento que está na eminência de ocorrer
+
+//remover_evento(); // remove e retorna o evento que está na eminência de ocorrer.
 
 
 
