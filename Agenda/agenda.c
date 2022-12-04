@@ -22,7 +22,6 @@ struct elementoLSE{
 
 
 TipoAgendaLSE* criar_agenda(){
-
     TipoAgendaLSE *l = malloc(sizeof(TipoAgendaLSE)); // aloca na memória o elementoLSE que contem os campos: cargaUtil e deadline
     l->cargaMenorTempo = l->cargaUtil;
     l->prioridade = 1;
@@ -32,7 +31,6 @@ TipoAgendaLSE* criar_agenda(){
 
 TipoAgendaLSE* agendar_evento(char *titulo, char *data, int tempolimite, char *local, char *descricao, int Prioridade){//insere um novo evento na agenda considerando os atributos que irão posicionar o evento na agenda
 //TipoAgendaLSE* agendar_evento(TipoAgendaInfo* carga, int Prioridade){ 
-
     TipoAgendaLSE *l;    
     strcpy(l->cargaUtil->titulo, titulo); //tem que passar cada char do vetor de char, por isso fazer uma copia com strcpy
     strcpy(l->cargaUtil->data, data);
@@ -66,7 +64,6 @@ TipoAgendaInfo* remover_evento(){ // remove e retorna o evento que está na emin
     free(aux); // remove o menor tempo
 
     return aux;
-    
 }
 
 
