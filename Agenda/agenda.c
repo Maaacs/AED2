@@ -17,15 +17,14 @@ struct elementoLSE{
     TipoAgendaInfo *cargaMenorTempoAuxiliar;
     int prioridade;
     int deadline;
-    char titulo[60];
 };
 
 
 TipoAgendaLSE* criar_agenda(){
-    TipoAgendaLSE *l = malloc(sizeof(TipoAgendaLSE)); // aloca na memória o elementoLSE que contem os campos: cargaUtil e deadline
+    TipoAgendaLSE *l = malloc(sizeof(TipoAgendaLSE)); // aloca na memória o elementoLSE com seus campos acima
     l->cargaMenorTempo = l->cargaUtil;
-    l->prioridade = 1;
-    l->deadline = 2419200; // 4semanas==672h==40320min==249200s
+    l->prioridade = 1; // valor baixo (prioridade vai de 1 a 4)
+    l->deadline = 2419200; // Um tempo alto de 4semanas==672h==40320min==249200s
     return l;
 }
 
@@ -54,14 +53,15 @@ TipoAgendaInfo* proximo_evento(){ // retorna o evento que está na eminência de
     return l->cargaMenorTempo; //já tempos um campo que contém essa informação
 }
 
-
+// EStou levando em consideraçao apenas o tempo. Devo levar em consideraçao a prioridade será? Talvez n pq isso é uma agenda. 
+// Prioridade serviria somente lá para a fila de prioridade na hora de organizar os elementos no vetor
 TipoAgendaInfo* remover_evento(){ // remove e retorna o evento que está na eminência de ocorrer. (mantendo sempre o menor tempo (o segundo menor tempo))
     TipoAgendaLSE *l;
     TipoAgendaInfo *aux;
 
-    aux = l->cargaMenorTempo;
-    l->cargaMenorTempo = l->cargaMenorTempoAuxiliar; // menor tempo recebe o segundo menor tempo
-    free(aux); // remove o menor tempo
+    aux = l->cargaMenorTempo; // aux recebe o endereco do evento com o menor tempo
+    l->cargaMenorTempo = l->cargaMenorTempoAuxiliar; // menor tempo recebe o endereco do segundo menor tempo
+    free(aux); // remove o evento com o menor tempo
 
     return aux;
 }
