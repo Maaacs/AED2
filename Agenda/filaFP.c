@@ -57,5 +57,34 @@ void enfileirar_FP(TFilaPrioridade *f, void* elem){ // enfileira novos eventos
     }
 }
 
-// desenfileirar_FP()
+void* desenfileirar_FP (TFilaPrioridade* f){ // nesse formato TFila* f pq queremos trazer um cara para cá
+
+    if (f-> ocupacao == 0){ // para o caso em que a fila está vazia
+        return NULL;
+    }
+
+    void* elem = f->elems[0]; //podemos enfileirar um elemento de tipo genérico
+    f->ocupacao--;
+    trocar(f->elems, 0, f->ocupacao);
+    //validar a propriedade da ordem
+    int i, imaior = 0; // nesse instante, i e imaior "está no" pai
+    
+    do{ // toda vez que encontra-se um filho maior na esquerda ou à direita, deve-se trocar pelo pai
+        i = imaior;
+        int iesq = 2*i+1; // filho à esquerda
+        int idir = 2*i+2; // filho à direita
+        
+        if((iesq < f->ocupacao) && (f->compararFP(f->elems[i], f->elems[iesq]) < 0)){ //se o filho é maior que o pai
+            imaior = iesq;
+        }
+        if((idir < f->ocupacao) && (f->compararFP(f-imaior, f->elems[idir]) < 0)){// filho da direita é o maior entre os 3
+            imaior = idir;
+        }
+        trocar(f->elems, i , imaior);
+
+    }while(i!=imaior);
+
+    return elem;
+}
+
 // destroy_FP()
