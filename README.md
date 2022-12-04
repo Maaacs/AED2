@@ -1,4 +1,4 @@
-## Algoritmos desenvolvivos ao longo da disciplina de Algoritmos e Estruturas de Dados 2
+## Estruturas de Dados
 
 >Para compilar e executar os arquivos use:
 - [x] gcc -c arquivo.c
