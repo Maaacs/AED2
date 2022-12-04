@@ -2,8 +2,6 @@
 #include "stdlib.h"
 #include "string.h" //chamando a bib
 #include "agenda.h"
-
-
 // struct agenda{
 //     char data[8];
 //     char hora[5];
@@ -20,16 +18,21 @@ struct agendaInfo{
 
 struct elementoLSE{
     TipoAgendaInfo* cargaUtil; //agendaInfo
+    TipoAgendaInfo *cargaMenorTempo;
+    TipoAgendaInfo *cargaMenorTempoAuxiliar;
     int prioridade;
     int deadline;
+    char titulo[60];
 };
 
 
 TipoAgendaLSE* criar_agenda(){
 
     TipoAgendaLSE *l = malloc(sizeof(TipoAgendaLSE)); // aloca na memória o elementoLSE que contem os campos: cargaUtil e deadline
+    l->cargaMenorTempo = l->cargaUtil;
     l->prioridade = 1;
-    l->deadline = 0;
+    l->deadline = 2419200; // 4semanas==672h==40320min==249200s
+    //l->carga = l;
     return l;
 }
 
@@ -46,15 +49,34 @@ TipoAgendaLSE* agendar_evento(char *titulo, char *data, int tempolimite, char *l
     l->prioridade = Prioridade; //podemos tratar a prioridade como um elemento da LSE ou uma informaçao interna da AgendaInfo
 
     if (l->cargaUtil->tempoLimite < l->deadline){
+        //l->deadlineAuxiliar = l->deadline; // segundo menor tempo 
         l->deadline = l->cargaUtil->tempoLimite; // grava o menor tempo sempre
+        //l->titulo[*titulo]; //grava o titulo do evento com menor tempo
+        l->cargaMenorTempoAuxiliar = l->cargaMenorTempo; // carga com o segundo menor tempo
+        l->cargaMenorTempo = l->cargaUtil; //grava o endereco do evento com o menor tempo
     }
 
     return l;
 
 }
-//proximo_evento(); // retorna o evento que está na eminência de ocorrer
 
-//remover_evento(); // remove e retorna o evento que está na eminência de ocorrer.
+TipoAgendaInfo* proximo_evento(){ // retorna o evento que está na eminência de ocorrer
+    TipoAgendaLSE *l; 
+    return l->cargaMenorTempo;
+}
+
+
+TipoAgendaInfo* remover_evento(){ // remove e retorna o evento que está na eminência de ocorrer. (mantendo sempre o menor tempo)
+    TipoAgendaLSE *l;
+    TipoAgendaInfo *aux;
+
+    aux = l->cargaMenorTempo;
+    l->cargaMenorTempo = l->cargaMenorTempoAuxiliar; // menor tempo recebe segundo menor tempo
+    free(aux); // remove o menor tempo
+
+    return aux;
+    
+}
 
 
 
