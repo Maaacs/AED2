@@ -29,22 +29,22 @@ TipoAgendaLSE* criar_agenda(){
     return l;
 }
 
-TipoAgendaLSE* agendar_evento(int Prioridade, char *titulo, char *data, int tempolimite, char *local, char *descricao){//insere um novo evento na agenda considerando os atributos que irão posicionar o evento na agenda
+TipoAgendaLSE* agendar_evento(int prioridade, char *titulo, char *data, int tempolimite, char *local, char *descricao){//insere um novo evento na agenda considerando os atributos que irão posicionar o evento na agenda
 //TipoAgendaLSE* agendar_evento(TipoAgendaInfo* carga, int Prioridade){ 
     TipoAgendaLSE *l;  
-    l->cargaUtil->prioridade = Prioridade;  
+    l->cargaUtil->prioridade = prioridade;  
     strcpy(l->cargaUtil->titulo, titulo); //tem que passar cada char do vetor de char, por isso fazer uma copia com strcpy
     strcpy(l->cargaUtil->data, data);
     l->cargaUtil->tempoLimite = tempolimite;
     strcpy(l->cargaUtil->local, local);
     strcpy(l->cargaUtil->descricao, descricao);
 
-    if ((l->cargaUtil->tempoLimite < l->deadline) && (Prioridade >= l->Prioridade)){ // menor tempo e maior prioridade
+    if ((l->cargaUtil->tempoLimite < l->deadline) && (prioridade >= l->Prioridade)){ // menor tempo e maior prioridade
         l->deadline = l->cargaUtil->tempoLimite; // grava o menor tempo sempre
         l->cargaMenorTempoAuxiliar = l->cargaMenorTempo; // endereco do evento com o segundo menor tempo
         l->cargaMenorTempo = l->cargaUtil; //endereco do evento com o menor tempo
 
-        l->Prioridade = Prioridade; //grava a nova maior prioridade
+        l->Prioridade = prioridade; //grava a nova maior prioridade
     }
 
     return l;
