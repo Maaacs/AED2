@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
+#include "agenda.h"
 #include "filaFP.h"
 
 
@@ -17,17 +18,15 @@ struct filaPrioridade{
 
 //typedef struct fila TFila; // foi pro filaFP.h
 
-TFilaPrioridade* criar_fila_FP(int tamanho, TCompararFP comparar){
+TFilaPrioridade* criar_FP(int tamanho, TCompararFP comparar){
     TFilaPrioridade* f = malloc(sizeof(TFilaPrioridade)); //aloca a struct na memoria
-    //f->tamanho = tamanho;
-    //tamanho = (tamanho>0?tamanho:4); //se tamanho da fila for infinita (tam<0), define o tamanho inicial para 4
+    //se tamanho da fila for infinita (tam<0), define o tamanho inicial para 4
     f->tamanho = (tamanho>0?tamanho:4);
     f->e_infinita = (tamanho>0?0:1);
 
     //inicializando
     f->elems = malloc(sizeof(void*)*f->tamanho); // aloca os elementos na memoria
     f->ocupacao=0;
-
     f->compararFP = comparar;
 
     return f;
@@ -39,30 +38,40 @@ static void trocar (void* elems[], int i, int j){
     elems[j] = aux;
 }
 
-void enfileirar_FP(TFilaPrioridade *f, void* elem){ // enfileira novos eventos
-    if((f->e_infinita) && (f->ocupacao == f->tamanho)){ // redefinindo o tamanho
+int enfileirar_FP(TFilaPrioridade *f, void* elem){ // enfileira novos eventos
+
+    if(!(f->e_infinita) && (f->ocupacao == f->tamanho)){// lista finita está cheia
+        return 0;
+    }
+    if((f->e_infinita) && (f->ocupacao == f->tamanho)){ // aumentando o tamanho (para lista infinita)
         f->tamanho *= 2; // tamanho é igual a multiplicacao de tamanho por 2
         f->elems = realloc(f->elems, sizeof(void*)*f->tamanho);
     }
+    //enfileira os elementos
     f->elems[f->ocupacao] = elem;
     f->ocupacao++;
+    
     //validar a propriedade da ordem
     int i = f->ocupacao-1;
-    int pai = floor((i-1/2));
-    while((i!=0) && (f->compararFP(f->elems[pai], f->elems[i]) < 0)){ //menor do que zero signfica que o pai é maior que o filho
+    int pai = floor((i-1/2)); //retorna o maior inteiro menor ou igual a x (ou seja, arredonda para baixo) 
+    while((i!=0) && (f->compararFP(f->elems[pai], f->elems[i]) < 0)){ //menor do que zero signfica que o pai é maior que o filho // vai olhar para o primeiro campo da lista (prioridade)
         trocar(f->elems, i, pai);
         i = pai;
-        pai = floor((i-1)/2); //retorna o maior inteiro menor ou igual a x (ou seja, arredonda para baixo)
-        
+        pai = floor((i-1)/2); //retorna o maior inteiro menor ou igual a x (ou seja, arredonda para baixo)   
     }
+    // enfileirou
+    return 1;
 }
 
-void* desenfileirar_FP (TFilaPrioridade* f){ // nesse formato TFila* f pq queremos trazer um cara para cá
+// remove o primeiro elemento na fila com prioridade
+void* desenfileirar_FP (TFilaPrioridade* f){ // nesse formato TFila* f pq queremos trazer um elemento para cá
+    TipoAgendaLSE* l;
+
     if (f-> ocupacao == 0){ // para o caso em que a fila está vazia
         return NULL;
     }
 
-    void* elem = f->elems[0]; //podemos enfileirar um elemento de tipo genérico
+    void* elem = f->elems[0]; //elemento de tipo genérico com maior prioridade
     f->ocupacao--;
     trocar(f->elems, 0, f->ocupacao);
     //validar a propriedade da ordem
@@ -101,4 +110,9 @@ void destroy_FP(TFilaPrioridade* f){
         }   
     }
 }
+
+
+// int tamanho_filaFP (TFilaPrioridade* f){
+//     return f->ocupacao;
+// }
 
