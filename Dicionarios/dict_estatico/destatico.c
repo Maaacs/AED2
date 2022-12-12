@@ -1,15 +1,26 @@
 #include "destatico.h"
 
-typedef struct entrada{
+// typedef struct entrada{
+//     int chave;
+//     void* info;
+// }TEntradaDic;
+// typedef struct destatico{
+//     TEntradaDic entradas[100];
+//     int tamanho;
+//     int ocupacao;
+// }TDEstatico;
+
+struct entrada{
     int chave;
     void* info;
-}TEntradaDic;
+};
 
-typedef struct destatico{
+struct destatico{
     TEntradaDic entradas[100];
     int tamanho;
     int ocupacao;
-}TDEstatico;
+};
+
 
 // definindo as operacoes sobre o conjunto acima
 
