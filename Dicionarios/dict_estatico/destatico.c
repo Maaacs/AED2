@@ -27,11 +27,10 @@ struct destatico{
 
 TDEstatico* criar_DE(){ // significa criar uma instancia do TDEstatico
     TDEstatico *de = malloc(sizeof(TDEstatico));
-
     de->tamanho = 100;
     de->ocupacao = 0;
-
 };
+
 void* buscar_DE(TDEstatico* de , int chave){
     void* entrada = NULL;
     int inicio = 0;
@@ -48,8 +47,9 @@ void* buscar_DE(TDEstatico* de , int chave){
         }else{
             inicio = meio+1;
         }
-        
     }while ((!encontrou) && (inicio<fim)); 
+
+    return entrada;
 };
 
 int ocupacao_DE(TDEstatico* de){
