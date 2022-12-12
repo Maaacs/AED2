@@ -57,4 +57,7 @@ int ocupacao_DE(TDEstatico* de){
     return de->ocupacao;
 };
 
-void carga_DE(TDEstatico*);
+void carga_DE(TDEstatico* de, TEntradaDic entrada){ //inserindo uma a um
+    de->entradas[de->ocupacao] = entrada;
+    de->ocupacao++;
+};
