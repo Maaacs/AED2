@@ -38,7 +38,7 @@ void* buscar_DE(TDEstatico* de , int chave){
     
     short encontrou = 0;
 
-    while ((!encontrou) && (inicio<fim)){//busca binaria no dicionario
+    while ((!encontrou) && (inicio<=fim)){//busca binaria no dicionario
         int meio = (inicio+fim)/2; // toda vez que mexer no inicio ou fim precica-se redefinir o meio
         if (de->entradas[meio].chave == chave){
             encontrou=1; // verdade, encontrou-se o objeto
