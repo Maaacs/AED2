@@ -2,30 +2,18 @@
 #include "stdlib.h"
 #include "string.h" //chamando a bib
 #include "agenda.h"
+#include "filaFP.h"
 
-struct agendaInfo{
-    int prioridade;
-    char titulo[60];
-    char data[8]; // dia/mes/ano
-    int tempoLimite; //tempo limite para a realização do evento desde o agendamento em segundos
-    char local[20];
-    char descricao[30];
+struct agenda{
+    TFilaPrioridade *eventos;
 };
 
-struct elementoLSE{
-    TipoAgendaInfo* cargaUtil; //agendaInfo
-    TipoAgendaInfo *cargaMenorTempo;
-    TipoAgendaInfo *cargaMenorTempoAuxiliar;
-    int Prioridade;
-    int deadline;
-};
+typedef struct agenda TipoAgenda;
 
-
-TipoAgendaLSE* criar_agenda(){
-    TipoAgendaLSE *l = malloc(sizeof(TipoAgendaLSE)); // aloca na memória o elementoLSE com seus campos acima
-    l->cargaMenorTempo = l->cargaUtil; // endereco para o elemento
-    l->Prioridade = 1; // valor baixo (prioridade vai de 1 a 4)
-    l->deadline = 2419200; // Um tempo alto de 4semanas==672h==40320min==249200s
+// instancia agenda
+TipoAgenda* criar_agenda(TCompararAgenda comparar){
+    TipoAgenda*l = malloc(sizeof(TipoAgenda)); // aloca na memória o elementoLSE com seus campos acima
+    l->eventos = criar_FP(0, comparar);
     return l;
 }
 
@@ -39,7 +27,8 @@ TipoAgendaLSE* agendar_evento(int prioridade, char *titulo, char *data, int temp
     strcpy(l->cargaUtil->local, local);
     strcpy(l->cargaUtil->descricao, descricao);
 
-    if ((l->cargaUtil->tempoLimite < l->deadline) && (prioridade >= l->Prioridade)){ // menor tempo e maior prioridade
+    // Salvar o cara de maior prioridade e menor tempo
+    if ((l->cargaUtil->tempoLimite < l->deadline) && (prioridade >= l->Prioridade)){ // !IMPORTANTE! menor tempo e maior prioridade
         l->deadline = l->cargaUtil->tempoLimite; // grava o menor tempo sempre
         l->cargaMenorTempoAuxiliar = l->cargaMenorTempo; // endereco do evento com o segundo menor tempo
         l->cargaMenorTempo = l->cargaUtil; //endereco do evento com o menor tempo
