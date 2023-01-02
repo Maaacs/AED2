@@ -19,12 +19,10 @@ TipoAgenda* criar_agenda(TCompararAgenda comparar){
 
 void agendar_evento(TipoAgenda* agenda, void* evento){//insere um novo evento na agenda considerando os atributos que irão posicionar o evento na agenda
     enfileirar_FP(agenda->eventos, evento);
-
 }
 
-TipoAgendaInfo* proximo_evento(){ // retorna o evento que está na eminência de ocorrer
-    TipoAgendaLSE *l; 
-    return l->cargaMenorTempo; //já temos um campo que contém essa informação então só retornar o endereco desse evento
+void* proximo_evento(TipoAgenda* agenda){ // retorna o evento que está na eminência de ocorrer
+    return primeiro_FP(agenda->eventos);
 }
 
 // Estou levando em consideraçao apenas o tempo. Devo levar em consideraçao a prioridade será? Talvez n pq isso é uma agenda. 
