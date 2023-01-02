@@ -1,8 +1,7 @@
-typedef struct agendaInfo TipoAgendaInfo; //tipo agenda
-typedef struct elementoLSE TipoAgendaLSE;
+typedef int(*TCompararAgenda)(void*, void*);
+typedef struct agenda TipoAgenda;
 
-TipoAgendaLSE* criar_agenda();
-TipoAgendaLSE* agendar_evento(int Prioridade, char *titulo, char *data, int tempolimite, char *local, char *descricao);
-TipoAgendaInfo* proximo_evento();
-TipoAgendaInfo* remover_evento();
-//void imprimir_eventoAgenda(TipoAgendaInfo* l);
+TipoAgenda* criar_agenda(TCompararAgenda comparar);
+void agendar_evento(TipoAgenda* agenda, void* evento);
+void* proximo_evento(TipoAgenda* agenda);
+void* remover_evento(TipoAgenda* agenda);
