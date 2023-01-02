@@ -1,5 +1,5 @@
 #include "destatico.h"
-#include "stdio.h"
+#include "stdlib.h"
 
 // typedef struct entrada{
 //     int chave;
@@ -25,11 +25,28 @@ struct destatico{
 
 // definindo as operacoes sobre o conjunto acima
 
+// TEntradaDic* criar_entrada(int chave, void* info){ // isso cria ponteiros, mas o vetor nao espera ponteiros e sim entrada. Logo precisamso criar a instancia.
+//     TEntradaDic* e = malloc(sizeof(TEntradaDic));
+//     e->chave = chave;
+//     e->info = info;
+//     return e;
+// }
+
+TEntradaDic criar_entrada(int chave, void* info){ // isso cria ponteiros, mas o vetor nao espera ponteiros e sim entrada. Logo precisamso criar a instancia.
+    TEntradaDic e;
+    e.chave = chave;
+    e.info = info;
+
+    return e;
+}
+
 TDEstatico* criar_DE(){ // significa criar uma instancia do TDEstatico
     TDEstatico *de = malloc(sizeof(TDEstatico));
     de->tamanho = 100;
     de->ocupacao = 0;
-};
+
+    return de;
+}
 
 void* buscar_DE(TDEstatico* de , int chave){
     void* entrada = NULL;
@@ -49,15 +66,14 @@ void* buscar_DE(TDEstatico* de , int chave){
             inicio = meio+1;
         }
     }
-
     return entrada;
-};
+}
 
 int ocupacao_DE(TDEstatico* de){
     return de->ocupacao;
-};
+}
 
 void carga_DE(TDEstatico* de, TEntradaDic entrada){ //inserindo uma a um
     de->entradas[de->ocupacao] = entrada;
     de->ocupacao++;
-};
+}
