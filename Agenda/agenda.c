@@ -8,6 +8,7 @@ struct agenda{
     TFilaPrioridade *eventos;
 };
 
+typedef int(*TCompararAgenda)(void*, void*);
 typedef struct agenda TipoAgenda;
 
 // instancia agenda
@@ -27,19 +28,9 @@ void* proximo_evento(TipoAgenda* agenda){ // retorna o evento que está na emin�
 
 // Estou levando em consideraçao apenas o tempo. Devo levar em consideraçao a prioridade será? Talvez n pq isso é uma agenda. 
 // Prioridade serviria somente lá para a fila de prioridade na hora que ela for organizar os elementos no vetor.
-TipoAgendaInfo* remover_evento(){ // remove e retorna o evento que está na eminência de ocorrer. (mantendo sempre o menor tempo (o segundo menor tempo))
-    TipoAgendaLSE *l;
-    TipoAgendaInfo *aux;
-    aux = l->cargaMenorTempo; // aux recebe o endereco do evento com o menor tempo
-    l->cargaMenorTempo = l->cargaMenorTempoAuxiliar; // menor tempo recebe o endereco do segundo menor tempo
-    free(aux); // remove o evento com o menor tempo
-    return aux;
+void* remover_evento(TipoAgenda* agenda){ // remove e retorna o evento que está na eminência de ocorrer. (mantendo sempre o menor tempo (o segundo menor tempo))
+    desenfileirar_FP(agenda->eventos);
 }
-
-
-// void imprimir_eventoAgenda(TipoAgendaInfo* l){
-//     printf("%d %s %s %d %s %s\n", l->prioridade, l->titulo, l->data, l->tempoLimite, l->local, l->descricao);
-// }
 
 
 
