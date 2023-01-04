@@ -2,6 +2,7 @@
 #include "assert.h"
 #include "stdlib.h"
 #include "lista.h"
+#include "ddinamico.h"
 
 struct ddinamico{
     // dados
@@ -17,10 +18,6 @@ struct ddinamico{
     long int nro_cmps_por_rmc;
     long int nro_cmps_por_bsc;
 };
-
-typedef int (* TCompararDD)(void*, void*);
-typedef struct ddinamico TDDinamico;
-
 
 static int hashing(TDDinamico* dd, int chave){
     return (chave % dd->tamanho);
