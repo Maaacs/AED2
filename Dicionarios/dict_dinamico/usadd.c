@@ -5,7 +5,7 @@
 
 int main(int argc, char const *argv[]) {
 
-  TDDinamico* meuDD = criar_DD(25, NULL);
+  TDDinamico* meuDD = criar_DD(25);
 
   assert(meuDD!=NULL);
 

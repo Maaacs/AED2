@@ -39,23 +39,6 @@ static int primo_proximo(int num){
     return num;
 }
 
-TDDinamico* criar_DD(int tamanho, TCompararDD comparar){
-    TDDinamico* dd = malloc(sizeof(TDDinamico));
-
-    dd->tamanho = primo_proximo(tamanho);
-    dd->nro_elementos = 0;
-    dd->entradas = malloc(sizeof(TListaSE*)*dd->tamanho); //multiplica pelo tamanho /sizeof de ponteiro (TListaSE)
-    
-    for(int i=0; i<dd->tamanho; i++){
-        dd->entradas[i] = criarLSE(NULL,NULL);
-        //dd->entradas[i] = criarLSE(NULL, comparar);//se quiser comparar
-    }
-    dd->nro_busca = dd->nro_consulta = dd->nro_insercao = 0;
-    dd->nro_cmps_por_bsc = dd->nro_cmps_por_rmc = 0;
-
-    return dd;
-}
-
 typedef struct entrada{
     int chave;
     void* info;
@@ -69,6 +52,30 @@ TEntradaDD* criar_entrada_DD(int chave, void* info){ //retorna ponteiro
     return e;
 }
 
+int compararEntradaDD (void* e1, void* e2){
+    TEntradaDD* ee1 = e1;
+    TEntradaDD* ee2 = e2;
+
+    return (ee1->chave - ee2->chave); // ==0 se forem iguais,  <0 se primeiro for menor,  >0 se primeiro for maior
+}
+
+TDDinamico* criar_DD(int tamanho){
+    TDDinamico* dd = malloc(sizeof(TDDinamico));
+
+    dd->tamanho = primo_proximo(tamanho);
+    dd->nro_elementos = 0;
+    dd->entradas = malloc(sizeof(TListaSE*)*dd->tamanho); //multiplica pelo tamanho /sizeof de ponteiro (TListaSE)
+    
+    for(int i=0; i<dd->tamanho; i++){
+        dd->entradas[i] = criarLSE(NULL,compararEntradaDD);
+        //dd->entradas[i] = criarLSE(NULL, comparar);//se quiser comparar
+    }
+    dd->nro_busca = dd->nro_consulta = dd->nro_insercao = 0;
+    dd->nro_cmps_por_bsc = dd->nro_cmps_por_rmc = 0;
+
+    return dd;
+}
+
 void inserir_DD(TDDinamico *dd, int chave, void* info){
     int k = hashing(dd, chave);
     TListaSE* l =  dd->entradas[k];
@@ -79,8 +86,14 @@ void inserir_DD(TDDinamico *dd, int chave, void* info){
 }
 
 void* buscar_DD(TDDinamico *dd, int chave){
+    int k = hashing(dd, chave);
+    TListaSE* l =  dd->entradas[k];
 
-  return NULL;
+    //buscarConteudoLSE(l, (void*)&chave); //endereço de um inteiro convertido para void (casting), pois a funcao buscarConteudoLSE espera void e nao int
+
+    void* info = buscarConteudoLSE(l, &chave);
+
+    return info;
 }
 
 void* remover_DD(TDDinamico *dd, int chave){
