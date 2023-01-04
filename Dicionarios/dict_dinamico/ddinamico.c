@@ -15,6 +15,7 @@ struct ddinamico{
     int nro_consulta;
     int nro_busca;
     int nro_insercao;
+    int nro_remocao;
     long int nro_cmps_por_rmc;
     long int nro_cmps_por_bsc;
 };
@@ -104,8 +105,14 @@ void* remover_DD(TDDinamico *dd, int chave){
 
     TEntradaDD* e  = removerConteudoLSE(l, &chave);
 
-    void* info = e->info;
-    free(e);
+    void* info = NULL;
+    if( e != NULL){
+        void* info = e->info;
+        free(e);
+    }
+
+    dd->nro_remocao++;
+    dd->nro_cmps_por_rmc += tamanhoLSE(l);
 
     return info;
 }
