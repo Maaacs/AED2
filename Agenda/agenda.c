@@ -25,7 +25,7 @@ void* proximo_evento(TipoAgenda* agenda){ // retorna o evento que está na emin�
 
 
 void* remover_evento(TipoAgenda* agenda){ // remove o evento que está na iminência de ocorrer
-    desenfileirar_FP(agenda->eventos);
+    return desenfileirar_FP(agenda->eventos);
 }
 
 
