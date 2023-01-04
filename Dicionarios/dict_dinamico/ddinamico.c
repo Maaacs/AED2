@@ -73,6 +73,9 @@ void inserir_DD(TDDinamico *dd, int chave, void* info){
     int k = hashing(dd, chave);
     TListaSE* l =  dd->entradas[k];
     inserirInicioLSE(l, criar_entrada_DD(chave, info));
+
+    dd->nro_elementos++;
+    dd->nro_elementos++;
 }
 
 void* buscar_DD(TDDinamico *dd, int chave){
