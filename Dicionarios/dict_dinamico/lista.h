@@ -23,3 +23,4 @@ void inserirConteudoLSE(TListaSE* l, void* carga);
 void destruirLSE(TListaSE* *rl);
 int tamanhoLSE(TListaSE* l);
 
+int sizeofLSE();
