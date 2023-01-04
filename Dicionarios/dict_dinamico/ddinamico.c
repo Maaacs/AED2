@@ -80,6 +80,7 @@ TDDinamico* criar_DD(int tamanho){
 void inserir_DD(TDDinamico *dd, int chave, void* info){
     int k = hashing(dd, chave);
     TListaSE* l =  dd->entradas[k];
+    //pode fazer uma busca primeiro antes de inserir para verificar se a chave ja existe em uma palavra no dicionario
     inserirInicioLSE(l, criar_entrada_DD(chave, info));
 
     dd->nro_elementos++;
@@ -96,7 +97,7 @@ void* buscar_DD(TDDinamico *dd, int chave){
     dd->nro_busca++;
     dd->nro_cmps_por_bsc = dd->nro_cmps_por_bsc + tamanhoLSE(l);
 
-    return e->info;
+    return (e?e->info:e); //se existir info retorna info, senao retorna null
 }
 
 void* remover_DD(TDDinamico *dd, int chave){
