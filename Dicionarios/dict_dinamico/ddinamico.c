@@ -44,7 +44,7 @@ TDDinamico* criar_DD(int tamanho, TCompararDD comparar){
 
     dd->tamanho = primo_proximo(tamanho);
     dd->nro_elementos = 0;
-    dd->entradas = malloc(sizeof(TListaSE*)*dd->tamanho); //multiplica pelo tamanho
+    dd->entradas = malloc(sizeof(TListaSE*)*dd->tamanho); //multiplica pelo tamanho /sizeof de ponteiro (TListaSE)
     
     for(int i=0; i<dd->tamanho; i++){
         dd->entradas[i] = criarLSE(NULL,NULL);
@@ -56,8 +56,23 @@ TDDinamico* criar_DD(int tamanho, TCompararDD comparar){
     return dd;
 }
 
-void inserir_DD(TDDinamico *dd, int chave, void* info){
+typedef struct entrada{
+    int chave;
+    void* info;
+}TEntradaDD;
 
+TEntradaDD* criar_entrada_DD(int chave, void* info){ //retorna ponteiro
+    TEntradaDD* e = malloc(sizeof(TEntradaDD));
+    e->chave = chave;
+    e->info = info;
+
+    return e;
+}
+
+void inserir_DD(TDDinamico *dd, int chave, void* info){
+    int k = hashing(dd, chave);
+    TListaSE* l =  dd->entradas[k];
+    inserirInicioLSE(l, criar_entrada_DD(chave, info));
 }
 
 void* buscar_DD(TDDinamico *dd, int chave){
