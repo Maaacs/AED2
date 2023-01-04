@@ -88,10 +88,12 @@ void inserir_DD(TDDinamico *dd, int chave, void* info){
 void* buscar_DD(TDDinamico *dd, int chave){
     int k = hashing(dd, chave);
     TListaSE* l =  dd->entradas[k];
-
     //buscarConteudoLSE(l, (void*)&chave); //endereço de um inteiro convertido para void (casting), pois a funcao buscarConteudoLSE espera void e nao int
-
     void* info = buscarConteudoLSE(l, &chave);
+
+    //para gerar estatística
+    dd->nro_busca++;
+    dd->nro_cmps_por_bsc+=;
 
     return info;
 }
