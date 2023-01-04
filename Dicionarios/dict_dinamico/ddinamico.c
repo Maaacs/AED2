@@ -93,7 +93,7 @@ void* buscar_DD(TDDinamico *dd, int chave){
 
     //para gerar estatística
     dd->nro_busca++;
-    dd->nro_cmps_por_bsc+=;
+    dd->nro_cmps_por_bsc = dd->nro_cmps_por_bsc + tamanhoLSE(l);
 
     return info;
 }
