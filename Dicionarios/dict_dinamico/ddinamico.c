@@ -89,15 +89,23 @@ void* buscar_DD(TDDinamico *dd, int chave){
     int k = hashing(dd, chave);
     TListaSE* l =  dd->entradas[k];
     //buscarConteudoLSE(l, (void*)&chave); //endereço de um inteiro convertido para void (casting), pois a funcao buscarConteudoLSE espera void e nao int
-    void* info = buscarConteudoLSE(l, &chave);
+    TEntradaDD* e = buscarConteudoLSE(l, &chave);
 
     //para gerar estatística
     dd->nro_busca++;
     dd->nro_cmps_por_bsc = dd->nro_cmps_por_bsc + tamanhoLSE(l);
 
-    return info;
+    return e->info;
 }
 
 void* remover_DD(TDDinamico *dd, int chave){
-  return NULL;
+    int k = hashing(dd, chave);
+    TListaSE* l =  dd->entradas[k];
+
+    TEntradaDD* e  = removerConteudoLSE(l, &chave);
+
+    void* info = e->info;
+    free(e);
+
+    return info;
 }
