@@ -15,6 +15,11 @@ TPalavra* criarPalavra(int ocorrencia, int pagina){
     return p;
 }
 
+void imprimirPalavra(void *palavra) {
+    TPalavra* p = palavra;
+    printf ("Pagina: %d Ocorrencia: %d\n" , p->pagina, p->ocorrencial);
+}
+
 int compararPalavra(void* p1, void* p2){
     // casting
     TPalavra *pp1 = p1;
@@ -25,14 +30,14 @@ int compararPalavra(void* p1, void* p2){
 }
 
 int main(int argc, char const *argv[]){
-    TABB* dasPalavras = criarABB(compararPalavra);
+    TABB* dasPalavras = criarABB(compararPalavra, imprimirPalavra);
     assert(dasPalavras!=NULL);
     int pagina, ocorre;
     scanf("%d", &pagina);
     while(pagina!=-1){
         scanf("%d", &ocorre);
         TPalavra* p = criarPalavra(ocorre, pagina);
-
+        inserirABB(dasPalavras, p );
         scanf("%d", &pagina);
     }
     return 0;

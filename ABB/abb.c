@@ -24,7 +24,7 @@ TNo* criarNO(void* carga){
 
 struct ABB{
   // callbacks
-  // TImprimirABB impressora;
+  TImprimirABB impressora;
   TCompararABB comparar;
   // TDestroyABB destroy;
 
@@ -33,9 +33,10 @@ struct ABB{
 //  int altura;
 };
 
-TABB* criarABB (TCompararABB comparar){
+TABB* criarABB (TCompararABB comparar, TImprimirABB IMPRESSORA){
   TABB *abb = malloc(sizeof(TABB));  
 
+  abb->impressora = IMPRESSORA;
   abb->comparar = comparar;
 
   abb->raiz = NULL;
