@@ -21,7 +21,7 @@ TNo* criarNo(TNo* pai, void *c){
 
 TNo* inserirAB(TNo* raiz, void *info){
     if(raiz == NULL){
-        TNo *novo = criarNo(info);
+        TNo *novo = criarNo(raiz , info);
         return novo;
     }
     if(sorteio(0,1) == 1){
