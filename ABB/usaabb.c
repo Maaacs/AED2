@@ -40,5 +40,6 @@ int main(int argc, char const *argv[]){
         inserirABB(dasPalavras, p );
         scanf("%d", &pagina);
     }
+    imprimirABB(dasPalavras);
     return 0;
 }

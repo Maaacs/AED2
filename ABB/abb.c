@@ -70,3 +70,21 @@ void inserirABB(TABB *abb, void *info){
   abb->tamanho++;
 }
 
+static void _imprimirNo(TNo *no, TImprimirABB impressora){
+  if (no == NULL) {
+    return;
+  }
+  _imprimirNo (no->sae, impressora);
+  impressora (no->info);
+  _imprimirNo (no->sad, impressora);
+}
+
+void imprimirABB(TABB *abb) {
+  _imprimirNo (abb->raiz, abb->impressora);
+}
+
+// static TNo* _buscarNo(TNo *raiz, void *buscado, TCompararABB){
+//   TNo *sae, *sad;
+// }
+
+
