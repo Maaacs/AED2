@@ -87,4 +87,23 @@ void imprimirABB(TABB *abb) {
 //   TNo *sae, *sad;
 // }
 
+#define MAX(a,b) (a>b?a: b)
+static int _alturaABB (TNo *no) {
+  if (no == NULL) { 
+    return -1;
+  }else{
+    return (MAX(_alturaABB (no->sae), _alturaABB(no->sad)) + 1);
+  }
+}
+
+int alturaABB (TABB *ab) {
+  TNo *raiz = ab->raiz;
+  int altura = _alturaABB(raiz);
+  return altura;
+}
+
+int tamanhoABB (TABB *abb) {
+  return _tamanhoNo (abb->raiz); // opcao 1
+  return abb->tamanho; // opcao 2
+}
 
