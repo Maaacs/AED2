@@ -14,3 +14,13 @@ Pagina: 3 Ocorrencia: 50 -->
 Buscar
 Podar
 Remover -->
+
+
+<!-- ./a.out
+5
+1
+1
+1
+-1
+Pagina: 1 Ocorrencia: 1
+Pagina: 5 Ocorrencia: 1 -->

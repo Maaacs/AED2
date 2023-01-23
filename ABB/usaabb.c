@@ -4,20 +4,23 @@
 #include "assert.h"
 
 typedef struct palavra{
-    int ocorrencial;
+    int ocorrencia;
     int pagina;
 }TPalavra;
 
 TPalavra* criarPalavra(int ocorrencia, int pagina){
     TPalavra* p = malloc(sizeof(TPalavra));
     p->pagina = pagina;
-    p->ocorrencial = ocorrencia;
+    p->ocorrencia = ocorrencia;
     return p;
+}
+void destruirPalavra(void* palavra){
+    free(palavra);
 }
 
 void imprimirPalavra(void *palavra) {
     TPalavra* p = palavra;
-    printf ("Pagina: %d Ocorrencia: %d\n" , p->pagina, p->ocorrencial);
+    printf ("Pagina: %d Ocorrencia: %d\n" , p->pagina, p->ocorrencia);
 }
 
 int compararPalavra(void* p1, void* p2){
@@ -30,7 +33,7 @@ int compararPalavra(void* p1, void* p2){
 }
 
 int main(int argc, char const *argv[]){
-    TABB* dasPalavras = criarABB(compararPalavra, imprimirPalavra);
+    TABB* dasPalavras = criarABB(compararPalavra, imprimirPalavra, destruirPalavra);
     assert(dasPalavras!=NULL);
     int pagina, ocorre;
     scanf("%d", &pagina);
@@ -41,5 +44,14 @@ int main(int argc, char const *argv[]){
         scanf("%d", &pagina);
     }
     imprimirABB(dasPalavras);
+
+    scanf ("%d", &pagina);
+    while (pagina!=-1) {
+        podarABB(dasPalavras, &pagina);
+        scanf ("%d", &pagina);
+        printf("=====>Podado:%d\n", pagina);
+        imprimirABB (dasPalavras);
+    }
+
     return 0;
 }

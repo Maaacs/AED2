@@ -26,14 +26,14 @@ struct ABB{
   // callbacks
   TImprimirABB impressora;
   TCompararABB comparar;
-  // TDestroyABB destroy;
+  TDestroyABB destroy;
 
   TNo* raiz;
   int tamanho;
 //  int altura;
 };
 
-TABB* criarABB (TCompararABB comparar, TImprimirABB IMPRESSORA){
+TABB* criarABB (TCompararABB comparar, TImprimirABB IMPRESSORA, TDestroyABB destroy){
   TABB *abb = malloc(sizeof(TABB));  
 
   abb->impressora = IMPRESSORA;
@@ -121,23 +121,51 @@ int alturaABB (TABB *ab) {
 }
 
 
-int tamanhoABB (TABB *abb) {
-  return _tamanhoNo (abb->raiz); // opcao 1
-  return abb->tamanho; // opcao 2
+static int _tamanhoNo (TNo *raiz){// atualiz sempre o tamanho
+  if (raiz==NULL) {
+    return 0;
+  }
+  return _tamanhoNo (raiz->sae) + _tamanhoNo (raiz->sad) + 1;
 }
 
-// void podarABB (TABB *abb, void *chave) {
-// TNo *podavel = _busca No (abb->raiz, chave, abb->comparar);
-// if (podavel != NULL) {
-// int podas=_tamanhoNo (podavel) ;
-// abb->tamanho -= podas;
-// TNo* pai = podavel->pai;
-// if (pai=-NULL) { // podando a raiz?
-// abb->raiz = _podarNo (podavel, abb->destroy);
-// felse if (pai->sae == podavel) { // podando a subarvore esquerda ?
-// pai->sae = _podarNo (podavel, abb->destroy);
-// telses / podando a subarvore direita?
-// pai->sad = _podarNo (podavel, abb->destroy);
-// }
-// }
+
+int tamanhoABB (TABB *abb) {
+  return _tamanhoNo (abb->raiz); // opcao 1
+  // return abb->tamanho; // opcao 2
+}
+
+void* _podarNo (TNo* raiz, TDestroyABB destroy) {
+  if (raiz==NULL)
+    return NULL;
+  
+  raiz->sae = _podarNo (raiz->sae, destroy);
+  raiz->sad = _podarNo (raiz->sad, destroy);
+  destroy (raiz->info);
+  free (raiz);
+  return NULL;
+}
+
+void podarABB (TABB *abb, void *chave) {
+  TNo *podavel = _buscarNo (abb->raiz, chave, abb->comparar);
+  if (podavel != NULL) {
+    int podas=_tamanhoNo (podavel) ;
+    abb->tamanho -= podas;
+    
+    TNo* pai = podavel->pai;
+
+    if (pai==NULL) { // podando a raiz?
+      abb->raiz = _podarNo (podavel, abb->destroy); // destroy funcao especialista que remove
+    }else if (pai->sae == podavel) { // podando a subarvore esquerda ?
+      pai->sae = _podarNo (podavel, abb->destroy);
+    }else{ // podando a subarvore direita?
+      pai->sad = _podarNo (podavel, abb->destroy); 
+    }
+  }
+}
+
+void static _trocarInfo(TNo *n1, TNo *n2){
+  void *aux = n1->info;
+  n1->info = n2->info;
+  n2->info = aux;
+}
 
