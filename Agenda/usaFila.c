@@ -31,7 +31,8 @@ TEvento* criar_evento(int prio, char mens []){
 
 void test_agendar_evento(){
     TipoAgenda *agenda = criar_agenda(compararEvento);   
-    //TipoAgenda *agenda = criar_agenda(10, compararEvento);   
+    //TipoAgenda *agenda = criar_agenda(10, compararEvento); 
+    //TipoAgenda *agenda = criar_agenda(NULL, compararEvento);   
     agendar_evento(agenda, criar_evento(1, "evento de prioridade"));
     TEvento *e = proximo_evento(agenda);    
     printf("Teste criar_evento OK\n");
