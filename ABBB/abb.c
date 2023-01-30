@@ -9,7 +9,7 @@ struct no {
   TNo* sad;
   TNo* pai;
 
-  //int altura;
+  int altura;
 };
 
 static TNo* _criarNo(void* carga){
@@ -19,7 +19,7 @@ static TNo* _criarNo(void* carga){
   no->sad = NULL;
   no->info = carga;
 
-  //no->altura = 0;
+  no->altura = 0;
 
   return no;
 }
@@ -48,13 +48,14 @@ TABB* criarABB(TCompararABB comparar, TImprimirABB impressora, TDestroyABB destr
   return abb;
 }
 
+// altura do nó
 #define MAX(a,b) (a>b?a:b)
 static int _alturaNo(TNo *no){
   if (no == NULL){
     return -1;
   }else{
-    //return no->altura;
-    return ( 1 + MAX(_alturaNo(no->sae),_alturaNo(no->sad)) );
+    return no->altura;
+    // return ( 1 + MAX(_alturaNo(no->sae),_alturaNo(no->sad)) );
   }
 }
 
@@ -102,12 +103,12 @@ static TNo* _inserirNo(TNo *raiz, void *info, TCompararABB comparar){
       raiz->sae =_inserirNo(raiz->sae, info, comparar);
       raiz->sae->pai = raiz;
 
-      //raiz->altura = (1+MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
+      raiz->altura = (1+MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
     }else{ // direita
       raiz->sad =_inserirNo(raiz->sad, info, comparar);
       raiz->sad->pai = raiz;
 
-      //raiz->altura = (1+MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
+      raiz->altura = (1+MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
 
     }
     return raiz;
@@ -189,7 +190,7 @@ void podarABB(TABB *abb, void *chave){
       }
       TNo* no = pai;
       while(no!=NULL){
-        //no->altura = (1 + MAX(_alturaNo(no->sad), _alturaNo(no->sae)));
+        no->altura = (1 + MAX(_alturaNo(no->sad), _alturaNo(no->sae)));
         no = no->pai;
       }
     }
@@ -250,13 +251,13 @@ static TNo* _removerNo(TNo *raiz, void *removido, TCompararABB comparar, TDestro
   }else if (comparar(raiz->info, removido) > 0){
     raiz->sae = _removerNo(raiz->sae, removido, comparar, destroy);
 
-    //raiz->altura = (1 + MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
+    raiz->altura = (1 + MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
 
 
   }else if(comparar(raiz->info, removido) < 0){
     raiz->sad = _removerNo(raiz->sad, removido, comparar, destroy);
 
-    //raiz->altura = (1 + MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
+    raiz->altura = (1 + MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
 
 
   }else{
@@ -289,7 +290,7 @@ static TNo* _removerNo(TNo *raiz, void *removido, TCompararABB comparar, TDestro
       _trocarInfo(maior, raiz);
       raiz->sae = _removerNo(raiz->sae, removido, comparar, destroy);
 
-      //raiz->altura = (1 + MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
+      raiz->altura = (1 + MAX(_alturaNo(raiz->sad), _alturaNo(raiz->sae)));
     }
   }
   return raiz;
